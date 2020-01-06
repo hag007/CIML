@@ -80,14 +80,13 @@ def calc_propensity_scores(file_name):
         except:
             categorical_c.append(a)
 
-    data_dummy=pd.get_dummies(data, columns=categorical_c)
-    # data_dummy=data
+    data_dummy=pd.get_dummies(data, columns=categorical_c, drop_first=True)
 
     control=data_dummy[data_dummy["T"]==0]
     test=data_dummy[data_dummy["T"]==1]
 
     m = Matcher(test, control, yvar="T", exclude=["Y"])
-    np.random.seed(20170924)
+    np.random.seed(20170925)
     m.fit_scores(balance=False, nmodels=1)
     m.predict_scores()
     m.plot_scores()
