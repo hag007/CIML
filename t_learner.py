@@ -8,12 +8,12 @@ def calc_t_learner(file_name):
     df_control = df[df["T"] == 0]
 
     model_1 = LinearRegression()
-    model_1.fit(df_treated.drop(["Y"],axis=1), df_treated["Y"])
-    res_1=model_1.predict(df_treated.drop(["Y"],axis=1))
+    model_1.fit(df_treated.drop(["Y","T"],axis=1), df_treated["Y"])
+    res_1=model_1.predict(df_treated.drop(["Y", "T"],axis=1))
 
     model_2 = LinearRegression()
-    model_2.fit(df_control.drop(["Y"], axis=1), df_control["Y"])
-    res_2=model_2.predict(df_treated.drop(["Y"],axis=1))
+    model_2.fit(df_control.drop(["Y","T"], axis=1), df_control["Y"])
+    res_2=model_2.predict(df_treated.drop(["Y", "T"],axis=1))
 
     att=(res_1-res_2).mean()
     print att

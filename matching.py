@@ -10,17 +10,17 @@ def calc_matching(file_name):
     topn=5
     n_jobs=1
 
-    knn = NearestNeighbors(n_neighbors=topn + 1, metric='euclidean', n_jobs=n_jobs)
+    knn = NearestNeighbors(n_neighbors=topn, metric='euclidean', n_jobs=n_jobs)
     knn.fit(df_control.drop(["T","Y"], axis=1))
 
     distances, indices = knn.kneighbors(df_treated.drop(["T","Y"], axis=1))
     vfunc = np.vectorize(lambda a: df_control.iloc[a].loc["Y"])
     res=vfunc(indices)
     ite=df_treated.loc[:,"Y"]-res.mean(axis=1)
-    ate=ite.sum()/float(len(ite))
+    att=ite.mean()
 
-    print ate
-    return ate
+    print att
+    return att
 
 if __name__=="__main__":
 
